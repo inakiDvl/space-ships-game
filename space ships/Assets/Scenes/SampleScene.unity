@@ -575,7 +575,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de0f438bddf264c9f4b98a64541450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents: {fileID: 11400000, guid: 0529e58a88c43d84fb66dbee87db68e6, type: 2}
+  playerInputs: {fileID: 11400000, guid: b5722310415afa94ca648b1865ffdf4f, type: 2}
+  projectileContainer: {fileID: 11400000, guid: 56e5a34fc226f8f40aadc00b7afd8cac, type: 2}
 --- !u!114 &930621825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,9 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5aa64a87631c5345979aa9d438f96f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputs: {fileID: 11400000, guid: b5722310415afa94ca648b1865ffdf4f, type: 2}
-  gameEvents: {fileID: 11400000, guid: 0529e58a88c43d84fb66dbee87db68e6, type: 2}
+  projectileContainer: {fileID: 11400000, guid: 56e5a34fc226f8f40aadc00b7afd8cac, type: 2}
   projectilePrefab: {fileID: 1013693454362670133, guid: 0d9c44873bbe47445a416ac310ec61ca, type: 3}
+  maxProjectiles: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,25 +1,25 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
 {
-    [SerializeField] private PlayerInputsSO playerInputs;
-    [SerializeField] private GameEventsSO gameEvents;
+    [SerializeField] private ProjectileContainerSO projectileContainer;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private int maxProjectiles;
 
-    private void FireProjectile()
+    private void InstantiateProjectiles()
     {
-        GameObject projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        gameEvents.ProjectileSpawned(projectileInstance);
+        for (int i = 0; i < maxProjectiles; i++)
+        {
+            GameObject projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            projectileInstance.SetActive(false);
+            projectileContainer.AddProjectile(projectileInstance);
+        }
     }
 
-    private void OnEnable()
+    private void Awake()
     {
-        playerInputs.OnFire += FireProjectile;
-    }
-
-    private void OnDisable()
-    {
-        playerInputs.OnFire -= FireProjectile;
+        InstantiateProjectiles();
     }
 }

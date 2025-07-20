@@ -8,8 +8,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float clampPadding = 1f;
 
     private Rigidbody body;
-    private float movementClampX;
-    private float movementClampY;
+
+    private float minX;
+    private float maxX;
+    private float minY;
+    private float maxY;
 
     private Vector3 movementVector;
 
@@ -30,11 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPos = transform.position + speed * Time.fixedDeltaTime * movementVector;
 
-        float minX = -movementClampX + clampPadding;
-        float maxX = movementClampX - clampPadding;
-        float minY = -movementClampY + clampPadding;
-        float maxY = movementClampY - clampPadding;
-
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
@@ -44,11 +42,16 @@ public class PlayerMovement : MonoBehaviour
     private void SetMovementClamps()
     {
         Camera playerCamera = Camera.main;
-        
+
         float playerCameraZ = MathF.Abs(playerCamera.transform.position.z);
 
-        movementClampY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
-        movementClampX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
+        float distanceToBorderY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
+        float distanceToBorderX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
+        
+        minX = -distanceToBorderX + clampPadding;
+        maxX = distanceToBorderX - clampPadding;
+        minY = -distanceToBorderY + clampPadding;
+        maxY = distanceToBorderY - clampPadding;
     }
 
     private void InitializeRigidBody()
