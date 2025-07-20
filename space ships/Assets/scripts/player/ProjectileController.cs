@@ -8,8 +8,8 @@ public class ProjectileController : MonoBehaviour
 
     private ProjectileContainer projectileContainer;
 
-    private List<GameObject> projectilesToControl = new();
-    private List<GameObject> removeQueue = new();
+    private List<Projectile> projectilesToControl = new();
+    private List<Projectile> removeQueue = new();
 
     private float maxX;
     private float maxY;
@@ -21,7 +21,7 @@ public class ProjectileController : MonoBehaviour
         if (nextProjectileIndex == projectileContainer.Projectiles.Count)
             nextProjectileIndex = 0;
 
-        GameObject projectile = projectileContainer.Projectiles[nextProjectileIndex];
+        Projectile projectile = projectileContainer.Projectiles[nextProjectileIndex];
 
         if (projectilesToControl.Contains(projectile))
             return;
@@ -29,7 +29,9 @@ public class ProjectileController : MonoBehaviour
         projectilesToControl.Add(projectile);
         projectile.transform.position = transform.position;
         
-        projectile.SetActive(true);
+        projectile.gameObject.SetActive(true);
+
+        projectile.Reset();
 
         nextProjectileIndex++;
     }
@@ -39,7 +41,7 @@ public class ProjectileController : MonoBehaviour
         foreach (var projectileToRemove in removeQueue)
         {
             projectilesToControl.Remove(projectileToRemove);
-            projectileToRemove.SetActive(false);
+            projectileToRemove.gameObject.SetActive(false);
         }
 
         removeQueue.Clear();
