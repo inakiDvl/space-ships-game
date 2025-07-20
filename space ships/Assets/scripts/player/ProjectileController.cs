@@ -5,8 +5,8 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     [SerializeField] private PlayerInputsSO playerInputs;
-    [Header("Projectiles")]
-    [SerializeField] private ProjectileContainerSO projectileContainer;
+
+    private ProjectileContainer projectileContainer;
 
     private List<GameObject> projectilesToControl = new();
     private List<GameObject> removeQueue = new();
@@ -18,19 +18,19 @@ public class ProjectileController : MonoBehaviour
 
     private void FireProjectile()
     {
-        if (nextProjectileIndex == projectileContainer.GetProjectileCount())
+        if (nextProjectileIndex == projectileContainer.Projectiles.Count)
             nextProjectileIndex = 0;
 
-        GameObject projectile = projectileContainer.GetProjectile(nextProjectileIndex);
+        GameObject projectile = projectileContainer.Projectiles[nextProjectileIndex];
 
         if (projectilesToControl.Contains(projectile))
             return;
 
         projectilesToControl.Add(projectile);
-
         projectile.transform.position = transform.position;
-        projectile.SetActive(true);
         
+        projectile.SetActive(true);
+
         nextProjectileIndex++;
     }
 
@@ -57,6 +57,8 @@ public class ProjectileController : MonoBehaviour
     
     private void Awake()
     {
+        projectileContainer = GetComponent<ProjectileContainer>();
+        
         Camera playerCamera = Camera.main;
         float playerCameraZ = MathF.Abs(playerCamera.transform.position.z);
         

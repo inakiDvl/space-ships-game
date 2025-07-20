@@ -1,28 +1,26 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Proyectile Container", menuName = "Scriptable Objects/Proyectile Container")]
-public class ProjectileContainerSO : ScriptableObject
+public class ProjectileContainer : MonoBehaviour
 {
-    private List<GameObject> projectiles = new();
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private int maxProjectiles;
 
-    public void AddProjectile(GameObject projectile)
+    public List<GameObject> Projectiles { get; private set; } = new();
+
+    private void InstantiateProjectiles()
     {
-        projectiles.Add(projectile);
+        for (int i = 0; i < maxProjectiles; i++)
+        {
+            var projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            projectileInstance.SetActive(false);
+            Projectiles.Add(projectileInstance);
+        }
     }
 
-    public GameObject GetProjectile(int index)
+    private void Awake()
     {
-        return projectiles[index];
-    }
-
-    public int GetProjectileCount()
-    {
-        return projectiles.Count;
-    }
-
-    private void OnEnable()
-    {
-        projectiles.Clear();
+        InstantiateProjectiles();
     }
 }
