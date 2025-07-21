@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         movementVector = (Vector3)vector;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         MovePlayer();
     }
@@ -31,12 +31,12 @@ public class PlayerMovement : MonoBehaviour
         if (movementVector == Vector3.zero)
             return;
 
-        Vector3 targetPos = transform.position + speed * Time.fixedDeltaTime * movementVector;
+        Vector3 targetPos = transform.position + speed * Time.deltaTime * movementVector;
 
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
-        body.MovePosition(targetPos);
+        transform.position = targetPos;
     }
 
     private void SetMovementClamps()
@@ -54,16 +54,8 @@ public class PlayerMovement : MonoBehaviour
         maxY = screenBorderY - clampPadding;
     }
 
-    private void SetUpRigidBody()
-    {
-        body = GetComponent<Rigidbody>();
-        body.interpolation = RigidbodyInterpolation.Interpolate;
-        body.isKinematic = true;
-    }
-
     private void Awake()
     {
-        SetUpRigidBody();
         SetMovementClamps();
     }
 
