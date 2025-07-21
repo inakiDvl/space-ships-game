@@ -5,67 +5,79 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     [SerializeField] private PlayerInputsSO playerInputs;
+    [SerializeField] private GameObject proyectilePrefab;
+    [SerializeField] private int proyectileCount;
+    [SerializeField] private float projectileSpeed;
 
-    private ProjectileContainer projectileContainer;
+    private List<GameObject> projectiles = new();
 
-    private List<Projectile> projectilesToControl = new();
-    private List<Projectile> removeQueue = new();
+    private List<GameObject> movingProjectiles = new();
+    private List<GameObject> removeMovingProjectileQueue = new();
 
-    private float maxX;
-    private float maxY;
-
-    private int nextProjectileIndex = 0;
+    private float screenBorderX;
 
     private void FireProjectile()
     {
-        if (nextProjectileIndex == projectileContainer.Projectiles.Count)
-            nextProjectileIndex = 0;
-
-        Projectile projectile = projectileContainer.Projectiles[nextProjectileIndex];
-
-        if (projectilesToControl.Contains(projectile))
-            return;
-
-        projectilesToControl.Add(projectile);
-        projectile.transform.position = transform.position;
-        
-        projectile.gameObject.SetActive(true);
-
-        projectile.Reset();
-
-        nextProjectileIndex++;
-    }
-
-    private void Update()
-    {
-        foreach (var projectileToRemove in removeQueue)
+        if (projectiles.Count == 0)
         {
-            projectilesToControl.Remove(projectileToRemove);
-            projectileToRemove.gameObject.SetActive(false);
+            var newProjectile = Instantiate(proyectilePrefab);
+            newProjectile.SetActive(false);
+            projectiles.Add(newProjectile);
         }
 
-        removeQueue.Clear();
+        int lastIndex = projectiles.Count - 1;
+        var projectile = projectiles[lastIndex];
         
-        foreach (var projectile in projectilesToControl)
+        projectile.SetActive(true);
+        projectile.transform.position = transform.position;
+
+        projectiles.RemoveAt(lastIndex);
+        movingProjectiles.Add(projectile);
+    }
+
+    private void MoveProjectiles()
+    {
+        foreach (var projectile in removeMovingProjectileQueue)
+        {
+            projectile.SetActive(false);
+            movingProjectiles.Remove(projectile);
+            projectiles.Add(projectile);
+        }
+
+        removeMovingProjectileQueue.Clear();
+
+        foreach (var projectile in movingProjectiles)
         {
             Transform projectileTranform = projectile.transform;
 
             projectileTranform.position += 15f * Time.deltaTime * projectileTranform.right;
 
-            if (projectileTranform.position.x > maxX)
-                removeQueue.Add(projectile);
+            if (projectileTranform.position.x > screenBorderX)
+                removeMovingProjectileQueue.Add(projectile);
         }
     }
-    
+
+    private void InstantiateProjectiles()
+    {
+        for (int i = 0; i < proyectileCount; i++)
+        {
+            var projectile = Instantiate(proyectilePrefab);
+            projectile.SetActive(false);
+            projectiles.Add(projectile);
+        }
+    }
+
+    private void CalculateScreenBorder()
+    {
+        Camera mainCamera = Camera.main;
+        float mainCameraZ = MathF.Abs(mainCamera.transform.position.z);
+        screenBorderX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, mainCameraZ)).x;
+    }
+
     private void Awake()
     {
-        projectileContainer = GetComponent<ProjectileContainer>();
-        
-        Camera playerCamera = Camera.main;
-        float playerCameraZ = MathF.Abs(playerCamera.transform.position.z);
-        
-        maxY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
-        maxX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
+        InstantiateProjectiles();
+        CalculateScreenBorder();
     }
 
     private void OnEnable()
@@ -76,5 +88,10 @@ public class ProjectileController : MonoBehaviour
     private void OnDisable()
     {
         playerInputs.OnFire -= FireProjectile;
+    }
+
+    private void Update()
+    {
+        MoveProjectiles();
     }
 }

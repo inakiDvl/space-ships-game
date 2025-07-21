@@ -45,13 +45,13 @@ public class PlayerMovement : MonoBehaviour
 
         float playerCameraZ = MathF.Abs(playerCamera.transform.position.z);
 
-        float distanceToBorderY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
-        float distanceToBorderX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
+        float screenBorderY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
+        float screenBorderX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
         
-        minX = -distanceToBorderX + clampPadding;
-        maxX = distanceToBorderX - clampPadding;
-        minY = -distanceToBorderY + clampPadding;
-        maxY = distanceToBorderY - clampPadding;
+        minX = -screenBorderX + clampPadding;
+        maxX = screenBorderX - clampPadding;
+        minY = -screenBorderY + clampPadding;
+        maxY = screenBorderY - clampPadding;
     }
 
     private void InitializeRigidBody()

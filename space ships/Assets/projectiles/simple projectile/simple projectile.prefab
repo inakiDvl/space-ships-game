@@ -9,9 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609336834547299699}
-  - component: {fileID: 8743186038519988580}
-  - component: {fileID: 7622163221902997166}
-  - component: {fileID: 3767047189388112440}
   m_Layer: 0
   m_Name: simple projectile
   m_TagString: Untagged
@@ -36,42 +33,6 @@ Transform:
   - {fileID: 7795185593456551872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8743186038519988580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013693454362670133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44a0d0d9ebb0fd04897e00e670672b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7622163221902997166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013693454362670133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763d9687b2cdb1145bfea13346ce1d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3767047189388112440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013693454362670133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf904233cd87ae441adc659ff8c20f65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1141529465068656531
 GameObject:
   m_ObjectHideFlags: 0

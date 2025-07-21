@@ -496,7 +496,6 @@ GameObject:
   - component: {fileID: 930621823}
   - component: {fileID: 930621822}
   - component: {fileID: 930621821}
-  - component: {fileID: 930621825}
   - component: {fileID: 930621824}
   m_Layer: 0
   m_Name: player
@@ -576,20 +575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInputs: {fileID: 11400000, guid: b5722310415afa94ca648b1865ffdf4f, type: 2}
---- !u!114 &930621825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930621820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5aa64a87631c5345979aa9d438f96f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1013693454362670133, guid: 0d9c44873bbe47445a416ac310ec61ca, type: 3}
-  maxProjectiles: 20
+  proyectilePrefab: {fileID: 1013693454362670133, guid: 0d9c44873bbe47445a416ac310ec61ca, type: 3}
+  proyectileCount: 3
+  projectileSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
