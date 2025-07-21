@@ -54,15 +54,16 @@ public class PlayerMovement : MonoBehaviour
         maxY = screenBorderY - clampPadding;
     }
 
-    private void InitializeRigidBody()
+    private void SetUpRigidBody()
     {
         body = GetComponent<Rigidbody>();
+        body.interpolation = RigidbodyInterpolation.Interpolate;
         body.isKinematic = true;
     }
 
     private void Awake()
     {
-        InitializeRigidBody();
+        SetUpRigidBody();
         SetMovementClamps();
     }
 
