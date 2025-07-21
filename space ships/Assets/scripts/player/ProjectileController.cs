@@ -6,7 +6,7 @@ public class ProjectileController : MonoBehaviour
 {
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private GameObject proyectilePrefab;
-    [SerializeField] private float screenBorderMargin;
+    [SerializeField] private float screenMargin;
     [SerializeField] private int proyectileCount;
     [SerializeField] private float projectileSpeed;
     
@@ -74,7 +74,7 @@ public class ProjectileController : MonoBehaviour
         Camera mainCamera = Camera.main;
         float mainCameraZ = MathF.Abs(mainCamera.transform.position.z);
         screenBorderX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, mainCameraZ)).x;
-        screenBorderX += screenBorderMargin;
+        screenBorderX += screenMargin;
     }
 
     private void Awake()

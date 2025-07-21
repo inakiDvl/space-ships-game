@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private float speed = 8f;
-    [SerializeField] private float clampPadding = 1f;
+    [SerializeField] private float screenMargin = 1f;
 
     private Rigidbody body;
 
@@ -48,10 +48,10 @@ public class PlayerMovement : MonoBehaviour
         float screenBorderY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
         float screenBorderX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
         
-        minX = -screenBorderX + clampPadding;
-        maxX = screenBorderX - clampPadding;
-        minY = -screenBorderY + clampPadding;
-        maxY = screenBorderY - clampPadding;
+        minX = -screenBorderX + screenMargin;
+        maxX = screenBorderX - screenMargin;
+        minY = -screenBorderY + screenMargin;
+        maxY = screenBorderY - screenMargin;
     }
 
     private void Awake()
