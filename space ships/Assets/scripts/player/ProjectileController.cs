@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class ProjectileController : MonoBehaviour, IUpdateable
 {
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private GameObject proyectilePrefab;
@@ -17,6 +17,11 @@ public class ProjectileController : MonoBehaviour
     private List<GameObject> removeMovingProjectileQueue = new();
 
     private float screenBorderX;
+
+    public void DoUpdate(float deltaTime)
+    {
+        MoveProjectiles();
+    }
 
     private void FireProjectile()
     {
@@ -52,7 +57,7 @@ public class ProjectileController : MonoBehaviour
         {
             Transform projectileTranform = projectile.transform;
 
-            projectileTranform.position += 15f * Time.deltaTime * projectileTranform.right;
+            projectileTranform.position += projectileSpeed * Time.deltaTime * projectileTranform.right;
 
             if (projectileTranform.position.x > screenBorderX)
                 removeMovingProjectileQueue.Add(projectile);
@@ -79,6 +84,8 @@ public class ProjectileController : MonoBehaviour
 
     private void Awake()
     {
+        Updater.Instance.AddUpdateable(this);
+        
         InstantiateProjectiles();
         CalculateScreenBorder();
     }
@@ -91,10 +98,5 @@ public class ProjectileController : MonoBehaviour
     private void OnDisable()
     {
         playerInputs.OnFire -= FireProjectile;
-    }
-
-    private void Update()
-    {
-        MoveProjectiles();
     }
 }

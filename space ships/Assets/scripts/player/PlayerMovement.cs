@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IUpdateable
 {
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private float speed = 8f;
@@ -16,14 +16,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movementVector;
 
+    public void DoUpdate(float deltaTime)
+    {
+        MovePlayer();
+    }
+
     private void CreateMovementVector(Vector2 vector)
     {
         movementVector = (Vector3)vector;
-    }
-
-    private void Update()
-    {
-        MovePlayer();
     }
 
     private void MovePlayer()
@@ -56,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        Updater.Instance.AddUpdateable(this);
+
         SetMovementClamps();
     }
 
