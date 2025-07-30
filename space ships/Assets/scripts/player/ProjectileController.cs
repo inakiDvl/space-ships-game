@@ -85,7 +85,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
 
     private void Start()
     {
-        Updater.Instance.AddUpdateable(this);
+        UpdateManager.Instance.AddUpdateable(this);
     }
 
     private void OnEnable()

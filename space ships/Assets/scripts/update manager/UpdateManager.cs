@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Updater : MonoBehaviour
+public class UpdateManager : MonoBehaviour
 {
-    public static Updater Instance;
+    public static UpdateManager Instance { get; private set; }
 
     private List<IUpdateable> updateables = new();
     private List<IUpdateable> addQueue = new();
@@ -45,7 +45,7 @@ public class Updater : MonoBehaviour
 
     private void CreateInstance()
     {
-        if (Instance == null)
+        if (Instance != this)
         {
             Instance = this;
         }

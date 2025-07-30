@@ -79,6 +79,6 @@ public class AsteroidController : MonoBehaviour, IUpdateable
     
     private void Start()
     {
-        Updater.Instance.AddUpdateable(this);
+        UpdateManager.Instance.AddUpdateable(this);
     }
 }
