@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour, IUpdateable
 {
+    [SerializeField] private GlobalVariablesSO globalVariables;
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private GameObject proyectilePrefab;
-    [SerializeField] private float screenMargin;
     [SerializeField] private int proyectileCount;
     [SerializeField] private float projectileSpeed;
     
-
     private List<GameObject> projectiles = new();
-
     private List<GameObject> movingProjectiles = new();
     private List<GameObject> removeMovingProjectileQueue = new();
 
-    private float screenBorderX;
+    private float maxX;
 
     public void DoUpdate(float deltaTime)
     {
@@ -59,7 +57,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
 
             projectileTranform.position += projectileSpeed * Time.deltaTime * projectileTranform.right;
 
-            if (projectileTranform.position.x > screenBorderX)
+            if (projectileTranform.position.x > maxX)
                 removeMovingProjectileQueue.Add(projectile);
         }
     }
@@ -74,20 +72,20 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         }
     }
 
-    private void CalculateScreenBorder()
+    private void SetMaxHorizontalPosition()
     {
-        Camera mainCamera = Camera.main;
-        float mainCameraZ = MathF.Abs(mainCamera.transform.position.z);
-        screenBorderX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, mainCameraZ)).x;
-        screenBorderX += screenMargin;
+        maxX = globalVariables.MaxX;
     }
 
     private void Awake()
     {
-        Updater.Instance.AddUpdateable(this);
-        
         InstantiateProjectiles();
-        CalculateScreenBorder();
+        SetMaxHorizontalPosition();
+    }
+
+    private void Start()
+    {
+        Updater.Instance.AddUpdateable(this);
     }
 
     private void OnEnable()

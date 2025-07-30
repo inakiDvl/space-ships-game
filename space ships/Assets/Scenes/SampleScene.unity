@@ -285,12 +285,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfcf5060d5837946bb4d59a3393bea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalVariables: {fileID: 11400000, guid: f8d7ce471c5083f469490a11b6d445ff, type: 2}
   asteroidPrefab: {fileID: 5039425558083999242, guid: 3f91de5b647132840b5de2543942e03a, type: 3}
   startingAmount: 5
   spawnRateAmount: 1
   spawnRate: 5
-  minAsteroidSpeed: 3
-  maxAsteroidSpeed: 6
+  minAsteroidSpeed: 2
+  maxAsteroidSpeed: 5
 --- !u!4 &406056175
 Transform:
   m_ObjectHideFlags: 0
@@ -438,7 +439,6 @@ GameObject:
   - component: {fileID: 690232454}
   - component: {fileID: 690232457}
   - component: {fileID: 690232456}
-  - component: {fileID: 690232455}
   m_Layer: 0
   m_Name: model
   m_TagString: Untagged
@@ -461,27 +461,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 930621823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &690232455
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690232453}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &690232456
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -638,7 +617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &930621821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,9 +630,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb36487f1e2e8344a9aef4d5c64c2e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalVariables: {fileID: 11400000, guid: f8d7ce471c5083f469490a11b6d445ff, type: 2}
   playerInputs: {fileID: 11400000, guid: b5722310415afa94ca648b1865ffdf4f, type: 2}
-  speed: 8
-  screenMargin: 1
+  startingMarginX: 2
+  speed: 10
 --- !u!4 &930621823
 Transform:
   m_ObjectHideFlags: 0
@@ -682,11 +662,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de0f438bddf264c9f4b98a64541450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  globalVariables: {fileID: 11400000, guid: f8d7ce471c5083f469490a11b6d445ff, type: 2}
   playerInputs: {fileID: 11400000, guid: b5722310415afa94ca648b1865ffdf4f, type: 2}
   proyectilePrefab: {fileID: 1013693454362670133, guid: 0d9c44873bbe47445a416ac310ec61ca, type: 3}
-  screenMargin: 2
   proyectileCount: 3
-  projectileSpeed: 10
+  projectileSpeed: 15
 --- !u!1 &1584945648
 GameObject:
   m_ObjectHideFlags: 0

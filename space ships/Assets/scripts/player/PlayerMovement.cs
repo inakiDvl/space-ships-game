@@ -3,15 +3,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, IUpdateable
 {
+    [SerializeField] private GlobalVariablesSO globalVariables;
     [SerializeField] private PlayerInputsSO playerInputs;
+    [SerializeField] private float startingMarginX;
     [SerializeField] private float speed = 8f;
-    [SerializeField] private float screenMargin = 1f;
 
-    private Rigidbody body;
-
-    private float minX;
     private float maxX;
-    private float minY;
     private float maxY;
 
     private Vector3 movementVector;
@@ -33,32 +30,33 @@ public class PlayerMovement : MonoBehaviour, IUpdateable
 
         Vector3 targetPos = transform.position + speed * Time.deltaTime * movementVector;
 
-        targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
-        targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+        targetPos.x = Mathf.Clamp(targetPos.x, -maxX, maxX);
+        targetPos.y = Mathf.Clamp(targetPos.y, -maxY, maxY);
 
         transform.position = targetPos;
     }
 
-    private void SetMovementClamps()
+    private void SetMaxPositions()
     {
-        Camera playerCamera = Camera.main;
+        maxX = globalVariables.MaxX - globalVariables.ScreenMargin;
+        maxY = globalVariables.MaxY - globalVariables.ScreenMargin;
+    }
 
-        float playerCameraZ = MathF.Abs(playerCamera.transform.position.z);
-
-        float screenBorderY = playerCamera.ViewportToWorldPoint(new Vector3(0.5f, 1, playerCameraZ)).y;
-        float screenBorderX = playerCamera.ViewportToWorldPoint(new Vector3(1, 0.5f, playerCameraZ)).x;
-        
-        minX = -screenBorderX + screenMargin;
-        maxX = screenBorderX - screenMargin;
-        minY = -screenBorderY + screenMargin;
-        maxY = screenBorderY - screenMargin;
+    private void SetPlayerStartingPosition()
+    {
+        Vector3 startingPosition = new(-globalVariables.MaxX + startingMarginX, 0, 0);
+        transform.position = startingPosition;
     }
 
     private void Awake()
     {
-        Updater.Instance.AddUpdateable(this);
+        SetMaxPositions();
+        SetPlayerStartingPosition();
+    }
 
-        SetMovementClamps();
+    private void Start()
+    {
+        Updater.Instance.AddUpdateable(this);
     }
 
     private void OnEnable()
