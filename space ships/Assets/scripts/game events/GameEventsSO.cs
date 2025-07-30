@@ -4,10 +4,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Game Events", menuName = "Scriptable Objects/Game Events")]
 public class GameEventsSO : ScriptableObject
 {
-    public event Action<GameObject> OnProjectileEnabled;
+    public event Action<GameObject> OnProjectileCollided;
 
-    public void ProjectileEnabled(GameObject projectile)
+    public void ProjectileCollided(GameObject projectile)
     {
-        OnProjectileEnabled?.Invoke(projectile);
+        OnProjectileCollided?.Invoke(projectile);
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609336834547299699}
   - component: {fileID: 92234149380221070}
+  - component: {fileID: 4306349588963726884}
   m_Layer: 0
   m_Name: simple projectile
   m_TagString: Untagged
@@ -48,6 +49,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trailRenderer: {fileID: 4584320145312218740}
+--- !u!114 &4306349588963726884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013693454362670133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf15ddcd60728f499743dcf46c9c76a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBox: {fileID: 5592913146659524905}
+  gameEvents: {fileID: 11400000, guid: 0529e58a88c43d84fb66dbee87db68e6, type: 2}
 --- !u!1 &1141529465068656531
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +74,6 @@ GameObject:
   - component: {fileID: 2376282785948890843}
   - component: {fileID: 4397641441461318699}
   - component: {fileID: 3268155220234213253}
-  - component: {fileID: 8662604299138892014}
   m_Layer: 0
   m_Name: projectile
   m_TagString: Untagged
@@ -4882,18 +4896,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &8662604299138892014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1141529465068656531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17145f2407d08a04d8bc42c89075baf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5380046670696024598
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,6 +4905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330618644516064283}
+  - component: {fileID: 5195119107385792062}
   - component: {fileID: 3445222524678469022}
   - component: {fileID: 5592913146659524905}
   m_Layer: 0
@@ -4927,6 +4930,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1609336834547299699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5195119107385792062
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380046670696024598}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!135 &3445222524678469022
 SphereCollider:
   m_ObjectHideFlags: 0

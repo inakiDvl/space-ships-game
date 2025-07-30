@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour, IUpdateable
 {
     [SerializeField] private GlobalVariablesSO globalVariables;
+    [SerializeField] private GameEventsSO gameEvents;
     [SerializeField] private PlayerInputsSO playerInputs;
     [SerializeField] private GameObject proyectilePrefab;
     [SerializeField] private int proyectileCount;
@@ -77,10 +77,17 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         maxX = globalVariables.MaxX;
     }
 
+    private void OnProjectileCollided(GameObject projectile)
+    {
+        removeMovingProjectileQueue.Add(projectile);
+    }
+
     private void Awake()
     {
         InstantiateProjectiles();
         SetMaxHorizontalPosition();
+
+        gameEvents.OnProjectileCollided += OnProjectileCollided;
     }
 
     private void Start()

@@ -4,7 +4,7 @@ public class HurtBox : MonoBehaviour
 {
     private Collider hurtCollider;
     
-    private void SetupCollider()
+    private void Setup()
     {
         hurtCollider = GetComponent<Collider>();
         hurtCollider.isTrigger = true;
@@ -12,7 +12,7 @@ public class HurtBox : MonoBehaviour
 
     private void Awake()
     {
-        SetupCollider();
+        Setup();
     }
 
     private void Start()
