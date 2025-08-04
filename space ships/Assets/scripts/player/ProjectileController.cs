@@ -18,7 +18,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
 
     public void DoUpdate(float deltaTime)
     {
-        MoveProjectiles();
+        MoveProjectiles(deltaTime);
     }
 
     private void FireProjectile()
@@ -33,14 +33,15 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         int lastIndex = projectiles.Count - 1;
         var projectile = projectiles[lastIndex];
 
-        projectile.SetActive(true);
         projectile.transform.position = transform.position;
 
         projectiles.RemoveAt(lastIndex);
         movingProjectiles.Add(projectile);
+
+        projectile.SetActive(true);
     }
 
-    private void MoveProjectiles()
+    private void MoveProjectiles(float deltaTime)
     {
         foreach (var projectile in removeMovingProjectileQueue)
         {
@@ -55,7 +56,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         {
             Transform projectileTranform = projectile.transform;
 
-            projectileTranform.position += projectileSpeed * Time.deltaTime * projectileTranform.right;
+            projectileTranform.position += projectileSpeed * deltaTime * projectileTranform.right;
 
             if (projectileTranform.position.x > maxX)
                 removeMovingProjectileQueue.Add(projectile);
@@ -77,7 +78,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         maxX = globalVariables.MaxX;
     }
 
-    private void OnProjectileCollided(GameObject projectile)
+    private void OnProjectileHit(GameObject projectile)
     {
         removeMovingProjectileQueue.Add(projectile);
     }
@@ -87,7 +88,7 @@ public class ProjectileController : MonoBehaviour, IUpdateable
         InstantiateProjectiles();
         SetMaxHorizontalPosition();
 
-        gameEvents.OnProjectileCollided += OnProjectileCollided;
+        gameEvents.OnProjectileHit += OnProjectileHit;
     }
 
     private void Start()

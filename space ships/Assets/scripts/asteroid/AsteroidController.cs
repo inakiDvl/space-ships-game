@@ -4,64 +4,81 @@ using UnityEngine;
 public class AsteroidController : MonoBehaviour, IUpdateable
 {
     [SerializeField] private GlobalVariablesSO globalVariables;
+    [SerializeField] private GameEventsSO gameEvents;
+    [Space(10)]
     [SerializeField] private GameObject asteroidPrefab;
-    [SerializeField] private int startingAmount;
-    [SerializeField] private int spawnRateAmount;
-    [SerializeField] private float spawnRate;
-    [SerializeField] private float minAsteroidSpeed;
-    [SerializeField] private float maxAsteroidSpeed;
+    [SerializeField] private int staringAsteroidCount = 10;
+    [SerializeField] private float asteroidSpawnRate = 1;
+    [SerializeField] private float asteroidSpeed = 1f;
 
     private float maxX;
     private float maxY;
 
-    private List<Asteroid> asteroids = new();
+    private List<GameObject> asteroids = new();
+    private List<GameObject> movingAsteroids = new();
+    private List<GameObject> removeMovingAsteroidQueue = new();
+
+    private float spawnRateTimer;
 
     public void DoUpdate(float deltaTime)
     {
-        MoveAsteoroids();
+        SpawnAsteroid(deltaTime);
+        MoveAsteoroids(deltaTime);
     }
 
-    private void InstantiateAsteroids()
+    private void OnAsteroidHurt(GameObject asteroid)
     {
-        Vector3 startingPosition = new(maxX, 0, 0);
+        removeMovingAsteroidQueue.Add(asteroid);
+    }
 
-        List<float> randomYPositions = GetRandomYPositions(startingAmount, -maxY, maxY);
-
-        for (int i = 0; i < startingAmount; i++)
+    private void InstantiateStartingAsteroids()
+    {
+        for (int i = 0; i <= staringAsteroidCount; i++)
         {
-            startingPosition.y = randomYPositions[i];
+            GameObject asteroidInstance = Instantiate(asteroidPrefab);
+            asteroidInstance.SetActive(false);
 
-            var asteroidInstance = Instantiate(asteroidPrefab, startingPosition, Quaternion.identity);
-
-            asteroids.Add(new Asteroid
-            {
-                Instance = asteroidInstance,
-                Speed = Random.Range(minAsteroidSpeed, maxAsteroidSpeed)
-            });
+            asteroids.Add(asteroidInstance);
         }
     }
 
-    private List<float> GetRandomYPositions(int count, float minY, float maxY)
+    private void SpawnAsteroid(float deltaTime)
     {
-        float spacing = (maxY - minY) / count;
-        List<float> positions = new();
+        spawnRateTimer += deltaTime;
 
-        for (int i = 0; i < count; i++)
+        while (spawnRateTimer >= asteroidSpawnRate && asteroids.Count > 0)
         {
-            float baseY = minY + spacing * i;
-            float randomOffset = Random.Range(0, spacing);
-            positions.Add(baseY + randomOffset);
-        }
+            int lastIndex = asteroids.Count - 1;
+            var asteroid = asteroids[lastIndex];
 
-        return positions;
+            asteroids.RemoveAt(lastIndex);
+            movingAsteroids.Add(asteroid);
+
+            asteroid.transform.position = new(maxX, 0, 0);
+            asteroid.SetActive(true);
+
+            spawnRateTimer = 0;
+        }
     }
 
-    private void MoveAsteoroids()
+    private void MoveAsteoroids(float deltaTime)
     {
-        foreach (var asteroid in asteroids)
+        foreach (var asteroid in removeMovingAsteroidQueue)
         {
-            Transform asteroidTranform = asteroid.Instance.transform;
-            asteroidTranform.position += asteroid.Speed * Time.deltaTime * -asteroidTranform.right;
+            asteroid.SetActive(false);
+            movingAsteroids.Remove(asteroid);
+            asteroids.Add(asteroid);
+        }
+
+        removeMovingAsteroidQueue.Clear();
+
+        foreach (var asteroid in movingAsteroids)
+        {
+            Transform asteroidTranform = asteroid.transform;
+            asteroidTranform.position += asteroidSpeed * deltaTime * -asteroidTranform.right;
+
+            if (asteroidTranform.position.x < -maxX)
+                removeMovingAsteroidQueue.Add(asteroid);
         }
     }
 
@@ -74,7 +91,9 @@ public class AsteroidController : MonoBehaviour, IUpdateable
     private void Awake()
     {
         SetMaxPositions();
-        InstantiateAsteroids();
+        InstantiateStartingAsteroids();
+
+        gameEvents.OnAsteroidHurt += OnAsteroidHurt;
     }
     
     private void Start()

@@ -5,8 +5,8 @@ public class UpdateManager : MonoBehaviour
 {
     public static UpdateManager Instance { get; private set; }
 
-    private List<IUpdateable> updateables = new();
     private List<IUpdateable> addQueue = new();
+    private List<IUpdateable> updateables = new();
     private List<IUpdateable> removeQueue = new();
 
     public void AddUpdateable(IUpdateable updateable)

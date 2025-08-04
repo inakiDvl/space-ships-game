@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour, IUpdateable
 
     public void DoUpdate(float deltaTime)
     {
-        MovePlayer();
+        MovePlayer(deltaTime);
     }
 
     private void CreateMovementVector(Vector2 vector)
@@ -23,12 +23,12 @@ public class PlayerMovement : MonoBehaviour, IUpdateable
         movementVector = (Vector3)vector;
     }
 
-    private void MovePlayer()
+    private void MovePlayer(float deltaTime)
     {
         if (movementVector == Vector3.zero)
             return;
 
-        Vector3 targetPos = transform.position + speed * Time.deltaTime * movementVector;
+        Vector3 targetPos = transform.position + speed * deltaTime * movementVector;
 
         targetPos.x = Mathf.Clamp(targetPos.x, -maxX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, -maxY, maxY);
